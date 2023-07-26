@@ -202,7 +202,7 @@ app.get("/todos/", async (request, response) => {
 
 app.get("/todos/:todoId/", async (request, response) => {
   const { todoId } = request.params;
-  const getTodoQuery = `SELECT * FROM todo WHERE id = ${todoId};`;
+  let getTodoQuery = `SELECT * FROM todo WHERE id = ${todoId};`;
   const data = await db.get(getTodoQuery);
   response.send(responseObject(data));
 });
@@ -269,7 +269,8 @@ app.post("/todos/", async (request, response) => {
 app.put("/todos/:todoId/", async (request, response) => {
   const { todoId } = request.params;
   let updateTodo = "";
-  const todoItems = `SELECT * FROM todo WHERE id = ${todoId};`;
+  let todoItems = `SELECT * FROM todo WHERE id = ${todoId};`;
+  todoItems = await db.get(todoItems);
   const {
     todo = todoItems.todo,
     priority = todoItems.priority,
