@@ -193,6 +193,8 @@ app.get("/todos/", async (request, response) => {
       getTodoQuery = `SELECT * FROM todo WHERE todo LIKE  '%${search_q}%';`;
       data = await db.all(getTodoQuery);
       response.send(data.map((eachQuery) => responseObject(eachQuery)));
+      break;
+
     default:
       getTodoQuery = `SELECT * FROM todo;`;
       data = await db.all(getTodoQuery);
